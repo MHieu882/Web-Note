@@ -1,0 +1,26 @@
+
+<div class="page">
+    <div class="header-container">
+        <h2 class="active"> Update Password </h2>
+    </div>
+    {{#if msg}}
+    <div
+        style="color:rgb(139, 23, 23); background-color:rgb(231, 141, 141); padding: 10px 10px 10px 10px; margin-top: 10px">
+        {{msg}}</div>
+    {{/if}}
+    <form action="/login/changepasss" method="POST">
+        <br>
+        <input required type="password"  id="oldpassword" name="oldpassword">
+        <span>Old password</span>
+        <br>
+        <input required type="password"  id="newpassword1" name="newpassword1">
+        <span>New password</span>
+        <br>
+        <input required type="password"  id="newpassword2" name="newpassword2">
+        <span>Confirm password</span>
+        <br>
+        <button class="signin">
+            Update
+        </button>
+    </form>
+</div>

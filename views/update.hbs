@@ -1,0 +1,16 @@
+        <p>Chỉnh Sửa Note</p>
+        <form method="POST" action="/news/update/{{products._id}}?_method=PUT">
+          <div class="form-outline mb-4">
+            <input type="text" class="form-control" value="{{products.title}}" id="title" name="title">
+            <label for="title" class="form-label">Tiêu Đề</label>
+          </div>
+          <div class="form-outline mb-4">
+            <textarea type="text" class="form-control"  id="content" name="content">{{products.desciption}}</textarea>
+            <label for="content" class="form-label">Nội Dung</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input  type="text" class="form-control" value="{{products.img}}" id="img" name="img" placeholder="Link image"/>
+            <label for="img" class="form-label">Hình ảnh</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </form>

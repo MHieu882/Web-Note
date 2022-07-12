@@ -1,0 +1,65 @@
+<div class="container " style="padding-top: 5%">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+  {{#each products}}
+    <div class="col">
+      <div class="card border border-primary shadow-0">
+        <div class="btn-group">
+          <button
+            type="button"
+            class="fas fa-ellipsis-v border-0"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+            style="margin-left: 95%"
+            aria-expanded="false"
+          >
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="/news/{{this._id}}">Cập nhật</a></li>
+            <li><a class="dropdown-item" data-mdb-toggle="modal" data-mdb-delete="{{this._id}}" data-mdb-target="#deleteproduct">Xóa</a>
+            </li>
+          </ul>
+        </div>
+          <img src="{{this.img}}" class="card-img-top" height="350" width="100"/>
+        </a>
+        <div class="card-body">
+            <h5 class="card-title">{{this.title}}</h5>
+          <p class="card-text">
+            {{this.content}}
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  {{/each}}
+  </div>
+</div>
+<!-- Modal delete -->
+<div class="modal fade" id="deleteproduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Bạn Có Chắc Chắn Muốn Xóa?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" id="btn-delete-product">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<form method="POST" name="delete-form"></form>
+<script>
+  const deleteproduct = document.getElementById('deleteproduct');
+  var deleteform=document.forms['delete-form'];
+  var btnDeleteProduct= document.getElementById('btn-delete-product');
+  deleteproduct.addEventListener('show.mdb.modal', (e) => {
+  const button = e.relatedTarget;
+  const id = button.getAttribute('data-mdb-delete');
+  btnDeleteProduct.onclick= function(e) {
+    deleteform.action =`/admin/delete/${id}?_method=DELETE`;
+    deleteform.submit();
+  }
+})
+</script>

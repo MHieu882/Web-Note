@@ -1,0 +1,188 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+  <div class="container d-flex justify-content-center">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center mb-3">
+        <a class="navbar-brand" href="/admin">
+        <img
+          id="MDB-logo"
+          src="https://mdbcdn.b-cdn.net/wp-content/uploads/2018/06/logo-mdb-jquery-small.png"
+          alt="MDB Logo"
+          draggable="false"
+          height="30"/>
+        </a>
+      </div>
+      <div class="col-12 d-flex justify-content-center">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav align-items-center mx-auto">
+            <li class="nav-item">
+              <a class="nav-link mx-2" data-mdb-toggle="modal" data-mdb-target="#exampleModal"><i class="fas fa-plus-circle pe-2"></i>Post</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2" href="/admin">
+              <span><i class="fas fa-bell pe-2"><span class="badge rounded-pill badge-notification bg-danger"></span>
+               </i>Manage</span>
+              </a>
+              
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2"data-mdb-toggle="modal" data-mdb-target="#changepass"><i class="fas fa-key"></i>Đổi Mật Khẩu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2" href="/login/logout"><i class="fas fa-sign-out-alt"></i>{{login.fullname}} Đăng Xuất</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Navbar -->
+
+<div class="row row-cols-1 row-cols-md-3 g-4 container" style="padding-top: 5%">
+  {{#each products}}
+    <div class="col">
+      <div class="card h-100 border border-primary shadow-0">
+        <a class="fas fa-trash" data-mdb-toggle="modal" data-mdb-delete="{{this._id}}" data-mdb-target="#deleteproduct" style="margin-left:95%"></a>
+        <img src="{{this.img}}" class="card-img-top" alt="Skyscrapers"/>
+        <div class="card-body">
+          <h5 class="card-title">{{this.title}}</h5>
+          <p class="card-text">
+          {{this.content}}.
+          </p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">{{this.user}}</small>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>
+<!-- Modal  new product-->
+<div class="modal top fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ghi Chú Mới</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+       <div class="modal-body">
+        <div class="container">
+          <div class="tab-content">
+            <div class="tab-pane fade show active">
+              <div class="text-center mb-3">
+                <form action="/admin/newproduct" method="POST">
+                <div class="form-outline mb-4">
+                  <input type="text" class="form-control" id="title" name="title">
+                  <label for="title" class="form-label">Tiêu Đề</label>
+                </div>
+                <div class="form-outline mb-4">
+                  <textarea type="text" class="form-control" id="content" name="content"></textarea>
+                  <label for="content" class="form-label">Nội dung</label>
+                </div>
+                <div class="form-outline mb-4">
+                  <input  type="text" class="form-control" id="img" name="img" placeholder="Link image"/>
+                  <label for="img" class="form-label">Hình ảnh</label>
+                </div>
+              </div>
+            </div>
+         </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+          Close
+        </button>
+        <input type="submit" class="btn btn-primary"></button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal delete -->
+<div class="modal fade" id="deleteproduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Bạn Có Chắc Chắn Muốn Xóa?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" id="btn-delete-product">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form method="POST" name="delete-form"></form>
+<script>
+  const deleteproduct = document.getElementById('deleteproduct');
+  var deleteform=document.forms['delete-form'];
+  var btnDeleteProduct= document.getElementById('btn-delete-product');
+  deleteproduct.addEventListener('show.mdb.modal', (e) => {
+  const button = e.relatedTarget;
+  const id = button.getAttribute('data-mdb-delete');
+  btnDeleteProduct.onclick= function(e) {
+    deleteform.action =`/admin/delete/${id}?_method=DELETE`;
+    deleteform.submit();
+  }
+})
+</script>
+<!---->
+
+
+<!-- Modal  changepass-->
+<div class="modal top fade" id="changepass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Đổi Mật Khẩu</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+       <div class="modal-body">
+        <div class="container">
+          <div class="tab-content">
+            <div class="tab-pane fade show active">
+              <div class="text-center mb-3">
+                <form action="/login/changepasss" method="POST">
+                  <div class="form-outline mb-4">
+                    <input required type="password" id="oldpassword" name="oldpassword">
+                    <label class="form-label">Mật Khẩu Cũ</label>  
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input required type="password"  id="newpassword1" name="newpassword1">
+                    <label class="form-label">Mật Khẩu Mới</label>
+                  </div>
+                <div class="form-outline mb-4">
+                  <input required type="password"  id="newpassword2" name="newpassword2">
+                  <label class="form-label">Nhập Lại Mật Khẩu</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+          Close
+        </button>
+        <input type="submit" class="btn btn-primary"></button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+

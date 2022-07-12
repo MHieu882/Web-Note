@@ -1,0 +1,22 @@
+<div class="tab-content">
+  <div class="tab-pane fade show active">
+    <div class="text-center mb-3">
+      <p>Ghi Chú Mới</p>
+      <form action="/newproduct" method="POST">
+          <div class="form-outline mb-4">
+            <input type="text" class="form-control" id="title" name="title">
+            <label for="title" class="form-label">Tiêu Đề</label>
+          </div>
+          <div class="form-outline mb-4">
+            <textarea type="text" class="form-control" id="content" name="content"></textarea>
+            <label for="content" class="form-label">Nội dung</label>
+          </div>  
+        <div class="form-outline mb-4">
+          <input  type="text" class="form-control" id="img" name="img" placeholder="Link image"/>
+          <label for="img" class="form-label">Hình ảnh</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng</button>
+      </form>
+    </div>
+  </div>
+</div>
